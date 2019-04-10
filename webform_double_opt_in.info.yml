@@ -1,0 +1,9 @@
+name: Webform double opt-in
+type: module
+description: 'Provides e-mail double opt-in functionality.'
+core: 8.x
+package: 'Webform'
+
+dependencies:
+  - webform
+  - email_confirmer

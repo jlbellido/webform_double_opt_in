@@ -1,0 +1,22 @@
+{
+  "name": "drupal/webform_double_opt_in",
+  "type": "drupal-module",
+  "description": "Provides e-mail double opt in functionality.",
+  "keywords": ["Drupal", "Webform"],
+  "authors": [
+    {
+      "name": "Orlando Thöny",
+      "email": "orlando.thoeny@gmail.com",
+      "role": "Maintainer"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^8.6",
+    "drupal/webform": "^5.2",
+    "drupal/email_confirmer": "^1.0"
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  }
+}

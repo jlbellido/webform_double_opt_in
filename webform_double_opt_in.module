@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Contains webform_double_opt_in.module.
+ */
+
+use Drupal as Drupal;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\email_confirmer\EmailConfirmationInterface;
+use Drupal\webform\Entity\WebformSubmission;
+use Drupal\webform_double_opt_in\Plugin\WebformHandler\DoubleOptInEmailWebformHandler;
+use Drupal\webform\WebformSubmissionInterface;
+
+/**
+ * Sets the opt-in status to confirmed if the user confirmes the e-mail.
+ *
+ * Acts on email confirmation responses.
+ *
+ * @param string $op
+ *   Either "confirm" or "cancel".
+ * @param \Drupal\email_confirmer\EmailConfirmationInterface $confirmation
+ *   The confirmation process.
+ */
+function webform_double_opt_in_email_confirmer($op, EmailConfirmationInterface $confirmation) {
+  if ($op === 'confirm') {
+    // Set the opt-in status to confirmed.
+    $webform_submission_id = $confirmation->getProperty('webform_submission_id');
+
+    $webform_submission = WebformSubmission::load($webform_submission_id);
+    if ($webform_submission instanceof WebformSubmissionInterface) {
+      $submission_data = $webform_submission->getData();
+
+      if (isset($submission_data['opt_in_status']) && $submission_data['opt_in_status'] === DoubleOptInEmailWebformHandler::STATUS_PENDING) {
+        $submission_data['opt_in_status'] = DoubleOptInEmailWebformHandler::STATUS_CONFIRMED;
+        $webform_submission->setData($submission_data);
+        $webform_submission->resave();
+      }
+    }
+    else {
+      Drupal::logger('webform_double_opt_in')->error('Could not load webform submission with id "@id" in webform_double_opt_in_email_confirmer.', ['@id' => $webform_submission_id]);
+    }
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function webform_double_opt_in_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.webform_double_opt_in') {
+    $readme_content = file_get_contents(dirname(__FILE__) . '/README.md');
+    if (Drupal::moduleHandler()->moduleExists('markdown')) {
+      // Use the Markdown filter to render the README.
+      $filter_manager = Drupal::service('plugin.manager.filter');
+      $markdown_config = Drupal::configFactory()->get('markdown.settings')->getRawData();
+      $markdown_settings = ['settings' => $markdown_config];
+      $filter = $filter_manager->createInstance('markdown', $markdown_settings);
+
+      return $filter->process($readme_content, 'en');
+    }
+    else {
+      return '<pre>' . $readme_content . '</pre>';
+    }
+  }
+}
