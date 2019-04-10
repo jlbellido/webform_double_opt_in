@@ -2,7 +2,6 @@
 
 namespace Drupal\webform_double_opt_in\Plugin\WebformHandler;
 
-use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\email_confirmer\EmailConfirmationInterface;
 use Drupal\email_confirmer\EmailConfirmerManagerInterface;
