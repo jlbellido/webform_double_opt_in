@@ -12,8 +12,9 @@ The Webform double opt-in module makes it possible to track e-mail opt-ins per W
 REQUIREMENTS
 ------------
 
-* This module requires Drupal 8.6 or above.
-* Webform 5.2 or above.
+* This module requires Drupal ^8.6
+* [Webform](https://www.drupal.org/project/webform) ^5.2
+* [Email confirmer](https://www.drupal.org/project/email_confirmer) ^1.0
 
 INSTALLATION
 ------------
