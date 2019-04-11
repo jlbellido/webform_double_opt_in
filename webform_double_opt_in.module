@@ -35,6 +35,9 @@ function webform_double_opt_in_email_confirmer($op, EmailConfirmationInterface $
         $submission_data['opt_in_status'] = DoubleOptInEmailWebformHandler::STATUS_CONFIRMED;
         $webform_submission->setData($submission_data);
         $webform_submission->resave();
+
+        /* Trigger all webform handlers, to allow reaction to double opt-in confirmation. */
+        $webform_submission->invokeWebformHandlers('postSave');
       }
     }
     else {
