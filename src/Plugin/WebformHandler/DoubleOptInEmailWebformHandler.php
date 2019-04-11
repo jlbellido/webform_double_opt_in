@@ -40,9 +40,9 @@ class DoubleOptInEmailWebformHandler extends EmailWebformHandler {
   /**
    * Opt-in states.
    */
-  const STATUS_PENDING_MAIL = 'Confirmation mail pending';
-  const STATUS_PENDING = 'Confirmation pending';
-  const STATUS_CONFIRMED = 'Confirmed';
+  const STATUS_PENDING_MAIL = 'Double opt-in confirmation mail pending';
+  const STATUS_PENDING = 'Double opt-in confirmation pending';
+  const STATUS_CONFIRMED = 'Double opt-in confirmed';
 
   /**
    * Default setting for the global opt-in flag.
