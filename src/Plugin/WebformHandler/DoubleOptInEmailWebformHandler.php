@@ -157,6 +157,12 @@ class DoubleOptInEmailWebformHandler extends EmailWebformHandler {
     And show up first on the configuration form. */
     $form = array_merge($form, $parentForm);
 
+    // Override available tokens. Add email-confirmer tokens.
+    $form['message']['token_tree_link'] = $this->tokenManager->buildTreeElement(
+      ['webform', 'webform_submission', 'email-confirmer'],
+      $this->t('Use [webform_submission:values:ELEMENT_KEY:raw] to get plain text values and use [webform_submission:values:ELEMENT_KEY:value] to get HTML values.')
+    );
+
     return $form;
   }
 
@@ -199,24 +205,25 @@ class DoubleOptInEmailWebformHandler extends EmailWebformHandler {
         $webform_submission->resave();
 
         if ($this->configuration[self::OPT_IN_GLOBALLY]) {
-          $opt_in_realm = 'webform_double_opt_in';
+          $optInRealm = 'webform_double_opt_in';
         }
         else {
-          $opt_in_realm = 'webform_double_opt_in_' . $webform_submission->id();
+          $optInRealm = 'webform_double_opt_in_' . $webform_submission->id();
         }
 
         $message = $this->getMessage($webform_submission);
 
         /* Set the opt-in status to confirmed if the user already confirmed his e-mail address at some point. */
-        $exitingEmailConfirmation = $this->eMailConfirmer->getConfirmation($message['to_mail'], FALSE, $opt_in_realm);
+        $exitingEmailConfirmation = $this->eMailConfirmer->getConfirmation($message['to_mail'], FALSE, $optInRealm);
         if ($exitingEmailConfirmation instanceof EmailConfirmationInterface && $exitingEmailConfirmation->isConfirmed()) {
           $submissionData['opt_in_status'] = self::STATUS_CONFIRMED;
           $webform_submission->setData($submissionData);
           $webform_submission->resave();
         }
         else {
-          /* TODO: Use e-mail message of this handler, feature has to be added to the email_confirmer module. */
-          $confirmation = $this->eMailConfirmer->confirm($message['to_mail'], ['webform_submission_id' => $webform_submission->id()], $opt_in_realm);
+          $message['is_html'] = $message['html'];
+          // TODO: Replace tokens in mail subject.
+          $confirmation = $this->eMailConfirmer->confirm($message['to_mail'], ['webform_submission_id' => $webform_submission->id()], $optInRealm, $message);
         }
       }
     }
@@ -227,6 +234,24 @@ class DoubleOptInEmailWebformHandler extends EmailWebformHandler {
    */
   public function postDelete(WebformSubmissionInterface $webform_submission) {
     // Override parent method to prevent e-mail sending.
+  }
+
+  /**
+   * Returns the allowed token types for the handler.
+   *
+   * @param bool $showRoleTokens
+   *   Flag if "webform_role" tokens should be allowed.
+   *
+   * @return array
+   *   Array of token types.
+   */
+  protected function getPossibleTokenTypes($showRoleTokens) {
+    $tokenTypes = parent::getPossibleTokenTypes($showRoleTokens);
+
+    // Allow email confirmer tokens.
+    $tokenTypes[] = 'email-confirmer';
+
+    return $tokenTypes;
   }
 
 }
