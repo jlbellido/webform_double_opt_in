@@ -1,0 +1,10 @@
+services:
+  webform_double_opt_in.get_submission_state_event_subscriber:
+    class: Drupal\webform_double_opt_in\EventSubscriber\GetSubmissionStateEventSubscriber
+    tags:
+    - { name: event_subscriber }
+
+  webform_double_opt_in.get_submission_state_options_event_subscriber:
+    class: Drupal\webform_double_opt_in\EventSubscriber\GetSubmissionStateOptionsEventSubscriber
+    tags:
+    - { name: event_subscriber }
