@@ -2,8 +2,8 @@
 
 namespace Drupal\webform_double_opt_in\EventSubscriber;
 
-use Drupal\webform\Event\GetSubmissionStateEvent;
-use Drupal\webform\Event\WebformEvents;
+use Drupal\webform_double_opt_in\Event\GetSubmissionStateEvent;
+use Drupal\webform_double_opt_in\Event\WebformDoubleOptInEvents;
 use Drupal\webform\WebformSubmissionInterface;
 use Drupal\webform_double_opt_in\Plugin\WebformHandler\DoubleOptInEmailWebformHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,7 +19,7 @@ class GetSubmissionStateEventSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[WebformEvents::GET_SUBMISSION_STATE][] = ['getState', 0];
+    $events[WebformDoubleOptInEvents::GET_SUBMISSION_STATE][] = ['getState', 0];
 
     return $events;
   }

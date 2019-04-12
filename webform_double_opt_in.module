@@ -66,3 +66,19 @@ function webform_double_opt_in_help($route_name, RouteMatchInterface $route_matc
     }
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function webform_double_opt_in_theme() {
+  $info = [
+    'webform_handler_webform_double_opt_in_email_summary' => [
+      'variables' => ['settings' => NULL, 'handler' => NULL],
+    ],
+    'webform_handler_webform_double_opt_in_email_compatible_summary' => [
+      'variables' => ['settings' => NULL, 'handler' => NULL],
+    ],
+  ];
+
+  return $info;
+}

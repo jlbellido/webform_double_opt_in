@@ -3,8 +3,8 @@
 namespace Drupal\webform_double_opt_in\EventSubscriber;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\webform\Event\GetSubmissionStateOptionsEvent;
-use Drupal\webform\Event\WebformEvents;
+use Drupal\webform_double_opt_in\Event\GetSubmissionStateOptionsEvent;
+use Drupal\webform_double_opt_in\Event\WebformDoubleOptInEvents;
 use Drupal\webform_double_opt_in\Plugin\WebformHandler\DoubleOptInEmailWebformHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,7 +19,7 @@ class GetSubmissionStateOptionsEventSubscriber implements EventSubscriberInterfa
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[WebformEvents::GET_SUBMISSION_STATE_OPTIONS][] = ['getStateOptions', 0];
+    $events[WebformDoubleOptInEvents::GET_SUBMISSION_STATE_OPTIONS][] = ['getStateOptions', 0];
 
     return $events;
   }

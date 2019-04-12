@@ -1,4 +1,4 @@
-webform_double_opt_in.handler.webform_double_opt_in_email:
+webform.handler.webform_double_opt_in_email:
   type: mapping
   label: Email
   mapping:
@@ -83,7 +83,7 @@ webform_double_opt_in.handler.webform_double_opt_in_email:
     debug:
       type: boolean
       label: 'Enable debugging'
-webform_double_opt_in.handler.webform_double_opt_in_email_compatible:
+webform.handler.webform_double_opt_in_email_compatible:
   type: mapping
   label: Email
   mapping:
