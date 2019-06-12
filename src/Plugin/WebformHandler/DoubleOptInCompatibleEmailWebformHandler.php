@@ -215,13 +215,6 @@ class DoubleOptInCompatibleEmailWebformHandler extends EmailWebformHandler {
     $form['to']['cc_mail'] = $this->buildElement('cc_mail', $this->t('CC email'), $this->t('CC email address'), FALSE, $mail_element_options, $options_element_options, $roles_element_options, $other_element_email_options);
     $form['to']['bcc_mail'] = $this->buildElement('bcc_mail', $this->t('BCC email'), $this->t('BCC email address'), FALSE, $mail_element_options, $options_element_options, $roles_element_options, $other_element_email_options);
 
-    // Show webform role tokens if they have been specified.
-    if (!empty($roles_element_options)) {
-      $showRoleTokens = TRUE;
-    }
-    else {
-      $showRoleTokens = FALSE;
-    }
     $token_types = ['webform', 'webform_submission'];
     // Show webform role tokens if they have been specified.
     if (!empty($roles_element_options)) {

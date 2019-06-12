@@ -237,21 +237,19 @@ class DoubleOptInEmailWebformHandler extends EmailWebformHandler {
   }
 
   /**
-   * Returns the allowed token types for the handler.
-   *
-   * @param bool $showRoleTokens
-   *   Flag if "webform_role" tokens should be allowed.
-   *
-   * @return array
-   *   Array of token types.
+   * {@inheritdoc}
    */
-  protected function getPossibleTokenTypes($showRoleTokens) {
-    $tokenTypes = parent::getPossibleTokenTypes($showRoleTokens);
+  protected function buildTokenTreeElement(array $token_types = [], $description = NULL) {
+    $token_types[] = 'email-confirmer';
+    return parent::buildTokenTreeElement($token_types, $description);
+  }
 
-    // Allow email confirmer tokens.
-    $tokenTypes[] = 'email-confirmer';
-
-    return $tokenTypes;
+  /**
+   * {@inheritdoc}
+   */
+  protected function elementTokenValidate(array &$form, array $token_types = ['webform', 'webform_submission', 'webform_handler']) {
+    $token_types[] = 'email-confirmer';
+    return parent::elementTokenValidate($form, $token_types);
   }
 
 }

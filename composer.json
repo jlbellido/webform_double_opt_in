@@ -13,7 +13,7 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/core": "^8.6",
-        "drupal/webform": "5.x-dev#b11f7de",
+        "drupal/webform": "^5.2.0",
         "drupal/email_confirmer": "1.x-dev#f7e3d2b"
     },
     "conflict": {
@@ -24,9 +24,6 @@
             "drupal/email_confirmer": {
                 "Support for HTML mails (13063328)": "https://www.drupal.org/files/issues/2019-04-11/email_confirmer-support_for_html_mails-3047124-11.patch",
                 "Configurable after-confirmation messages (2943145)": "https://www.drupal.org/files/issues/2019-04-12/email_confirmer-configurable_after_confirmation_messages-2943145-5.patch"
-            },
-            "drupal/webform": {
-                "Email handler: Extract possible token types to method (3047430)": "https://www.drupal.org/files/issues/2019-04-11/webform-email_handler_extract_possible_token_types_to_method-3047430-2.patch"
             }
         }
     }
